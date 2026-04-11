@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>瞬速シフト連携</title>
+    
+    <!-- アプリ化（PWA）のための設定 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="シフト連携">
+    <meta name="theme-color" content="#0f172a">
+    
     <!-- 必要なライブラリの読み込み -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -61,7 +68,6 @@
                 off: { label: '休み', title: '休み', allDay: true, color: 'bg-emerald-500', light: 'bg-emerald-50', text: 'text-emerald-500', icon: 'coffee', googleColor: '10' }
             };
 
-            // Google認証クライアントの初期化（再試行ロジック付）
             useEffect(() => {
                 const initGSI = () => {
                     if (window.google && window.google.accounts) {
@@ -111,11 +117,10 @@
 
             const syncToGoogle = async () => {
                 if (CLIENT_ID.includes("ここに")) {
-                    setNotification("クライアントIDを正しく設定してください");
+                    setNotification("クライアントIDを設定してください");
                     return;
                 }
                 
-                // トークンがない、または無効になった場合に再要求
                 if (!accessToken) {
                     if (tokenClient) {
                         tokenClient.requestAccessToken();
@@ -157,7 +162,6 @@
                         });
 
                         if (response.status === 401) {
-                            // 認証エラー時はトークンを破棄して再ログインを促す
                             setAccessToken(null);
                             tokenClient.requestAccessToken();
                             throw new Error('Unauthorized');
@@ -192,7 +196,6 @@
                                 if (tokenClient) tokenClient.requestAccessToken();
                             }} 
                             className={`p-2.5 rounded-full transition-all active-scale ${accessToken ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-200' : 'bg-white border-2 border-slate-100 text-slate-300 shadow-sm'}`}
-                            title="再認証"
                         >
                             <Icon name="login" size={20} />
                         </button>
