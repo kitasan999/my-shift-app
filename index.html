@@ -30,8 +30,9 @@
     <script type="text/babel">
         const { useState, useMemo, useEffect, useCallback } = React;
 
-        // --- ★ここに取得した「クライアントID」を貼り付けてください ---
-        const CLIENT_ID = "257695424437-js7hr2c6p1i0q4suhh5ipneoe7o6rneu.apps.googleusercontent.com";
+        // --- ★ここに取得した「最新のクライアントID」を貼り付けてください ---
+        // 以前動いていた時と同じプロジェクトのIDであることを確認してください。
+        const CLIENT_ID = "ここにあなたのクライアントIDを貼り付けてください";
 
         const Icon = ({ name, size = 20 }) => {
             const paths = {
@@ -81,6 +82,9 @@
                                         setNotification("認証を更新しました");
                                         setTimeout(() => setNotification(null), 2000);
                                     }
+                                    if (response.error) {
+                                        setNotification("Google認証エラー: " + response.error);
+                                    }
                                 },
                             });
                             setTokenClient(client);
@@ -117,7 +121,7 @@
 
             const syncToGoogle = async () => {
                 if (CLIENT_ID.includes("ここに")) {
-                    setNotification("クライアントIDを設定してください");
+                    setNotification("257695424437-js7hr2c6p1i0q4suhh5ipneoe7o6rneu.apps.googleusercontent.com");
                     return;
                 }
                 
@@ -195,7 +199,7 @@
                                 setAccessToken(null);
                                 if (tokenClient) tokenClient.requestAccessToken();
                             }} 
-                            className={`p-2.5 rounded-full transition-all active-scale ${accessToken ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-200' : 'bg-white border-2 border-slate-100 text-slate-300 shadow-sm'}`}
+                            className={`p-2.5 rounded-full transition-all active-scale ${accessToken ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-200' : 'bg-white border-2 border-slate-200 text-slate-300 shadow-sm'}`}
                         >
                             <Icon name="login" size={20} />
                         </button>
