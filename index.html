@@ -17,7 +17,7 @@ import {
 // ==========================================
 // ★ 唯一の設定箇所：クライアントIDを貼り付けてください
 // ==========================================
-const CLIENT_ID = "ここにあなたのクライアントIDを貼り付けてください";
+const CLIENT_ID = "257695424437-js7hr2c6p1i0q4suhh5ipneoe7o6rneu.apps.googleusercontent.com";
 
 const App = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -106,7 +106,7 @@ const App = () => {
   }, [activeMode]);
 
   const syncToGoogle = async () => {
-    if (CLIENT_ID.includes("257695424437-js7hr2c6p1i0q4suhh5ipneoe7o6rneu.apps.googleusercontent.com")) {
+    if (CLIENT_ID.includes("ここに")) {
       notify("コード内のCLIENT_IDを書き換えてください");
       return;
     }
