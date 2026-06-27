@@ -67,8 +67,9 @@
       night1: { id: 'night1', label: '夜①', color: 'bg-blue-500', textClass: 'text-white', googleColorId: '9', title: '夜①' },
       request_off: { id: 'request_off', label: '希望休', color: 'bg-red-500', textClass: 'text-white', googleColorId: '11', title: '希望休' },
       off: { id: 'off', label: '休み', color: 'bg-green-500', textClass: 'text-white', googleColorId: '10', title: '休み' },
+      paid_leave: { id: 'paid_leave', label: '有休', color: 'bg-yellow-400', textClass: 'text-gray-900', googleColorId: '5', title: '有休' },
     };
-    const SHIFT_ORDER = ['none', 'night1', 'request_off', 'off'];
+    const SHIFT_ORDER = ['none', 'night1', 'request_off', 'off', 'paid_leave'];
 
     // --- インラインSVGアイコン ---
     const IconCalendar = () => (
@@ -177,7 +178,7 @@
           payload.start = { dateTime: startDate.toISOString(), timeZone: 'Asia/Tokyo' };
           payload.end = { dateTime: endDate.toISOString(), timeZone: 'Asia/Tokyo' };
         } else {
-          // 終日イベント (希望休, 休み)
+          // 終日イベント (希望休, 休み, 有休)
           // Google Calendar APIの仕様: 終日イベントの終了日は+1日
           const startDate = new Date(dateStr);
           const endDate = new Date(startDate);
@@ -354,7 +355,7 @@
           </div>
 
           {/* 凡例 */}
-          <div className="mx-4 mb-2 flex justify-center gap-5 p-4 bg-white rounded-2xl shadow-sm text-xs font-bold text-gray-600">
+          <div className="mx-4 mb-2 flex justify-center gap-4 p-4 bg-white rounded-2xl shadow-sm text-xs font-bold text-gray-600 flex-wrap">
             {SHIFT_ORDER.filter(id => id !== 'none').map(id => (
               <div key={id} className="flex flex-col items-center gap-1">
                 <span className={`w-4 h-4 rounded-full shadow-inner ${SHIFT_TYPES[id].color}`}></span>
